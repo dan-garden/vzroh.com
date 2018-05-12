@@ -245,8 +245,39 @@ canvas {
     outline: solid 1px rgba(255, 255, 255, 0.6);
 }
 
-#artwork-list > li > a:hover > .block {
-    
+
+#order-form {
+    width: 70%;
+    min-width: 300px;
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+}
+
+#order-form > input, #order-form > textarea {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    border: solid 1px #ABABAB;
+    background-color: transparent;
+    color: white;
+}
+
+#order-form > input:focus, #order-form > textarea:focus {
+    border: none;
+    outline: solid 2px white;
+}
+
+#order-form > textarea {
+    height: 250px;
+}
+
+#order-form > button {
+    display: block;
+    width: 100%;
 }
 
 footer {

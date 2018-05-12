@@ -1,7 +1,7 @@
 <?php
     $page = array(
         "name" => "Order",
-        "maintenance" => true,
+        "maintenance" => false,
         "content" => true
     );
 ?>
@@ -19,6 +19,12 @@
         <!--CONTENT START-->
         <div id="content">
             <a href="/" id="content-logo"></a>
+            <form id="order-form">
+                <input type="text" name="name" placeholder="NAME"/>
+                <input type="text" name="email" placeholder="EMAIL ADDRESS"/>
+                <textarea name="message" placeholder="MESSAGE..."></textarea>
+                <button type="submit" id="submit-form">Send</button>
+            </form>
         </div>
         <!--CONTENT END-->
         <?php include 'footer.php'; ?>
