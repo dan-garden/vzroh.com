@@ -7,7 +7,6 @@ const artwork_list = document.getElementById('artwork-list');
 
 
 let checkingLivestream = false;
-let loadingArtworkList = false;
 
 window.onload = function () {
     if (home_logo) {
@@ -27,12 +26,6 @@ window.onload = function () {
         window.setInterval(() => {
             ifOnline();
         }, checkInterval);
-    }
-
-    if(loadingArtworkList) {
-        getArtworkList((result) => {
-            renderArtworkList(result);
-        });
     }
 }
 
@@ -132,5 +125,7 @@ const getArtworkList = (fn) => {
 }
 
 const loadArtwork = () => {
-    loadingArtworkList = true;
-}
+    getArtworkList((result) => {
+        renderArtworkList(result);
+    });
+};
