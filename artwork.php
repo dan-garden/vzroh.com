@@ -18,11 +18,17 @@
         <!--CONTENT START-->
         <div id="content">
             <div id="content-logo"></div>
+            <ul id="artwork-list">
+
+            </ul>
         </div>
         <!--CONTENT END-->
         <?php include 'footer.php'; ?>
     </div>
     <?php include 'external_footer.php'; ?>
+    <script>
+        loadArtwork();
+    </script>
 </body>
 
 </html>

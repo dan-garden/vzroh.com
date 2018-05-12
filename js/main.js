@@ -2,10 +2,13 @@ const left_panel = document.getElementById('left-panel');
 const nav_toggle = document.getElementById('nav-toggle');
 const home_logo = document.getElementById('home-logo');
 const content = document.getElementById('content');
+const artwork_list = document.getElementById('artwork-list');
 
 
 
 let checkingLivestream = false;
+let loadingArtworkList = false;
+
 window.onload = function () {
     if (home_logo) {
         home_logo.velocity({
@@ -24,6 +27,12 @@ window.onload = function () {
         window.setInterval(() => {
             ifOnline();
         }, checkInterval);
+    }
+
+    if(loadingArtworkList) {
+        getArtworkList((result) => {
+            renderArtworkList(result);
+        });
     }
 }
 
@@ -51,7 +60,7 @@ const showStream = () => {
             opacity: 1
         }, 1000);
     });
-};
+}
 
 const hideStream = () => {
     content.velocity({
@@ -64,7 +73,7 @@ const hideStream = () => {
             opacity: 1
         }, 1000);
     });
-};
+}
 
 const ifOnline = () => {
     streamOnline(result => {
@@ -78,4 +87,50 @@ const ifOnline = () => {
 
 const livestreamCheck = () => {
     checkingLivestream = true;
+}
+
+const renderArtworkList = (data) => {
+    artwork_list.innerHTML = '';
+    for(let i = 0; i < data.length; i++) {
+        let artwork = data[i];
+        let artwork_dom = document.createElement('li');
+
+        let thumbnail = document.createElement('img');
+        thumbnail.src = artwork.thumbnail;
+        artwork_dom.append(thumbnail);
+
+        let block = document.createElement('div');
+        block.classList.add('block');
+
+        let title = document.createElement('div');
+        title.classList.add('title');
+        title.innerHTML = artwork.title;
+
+        let desc = document.createElement('div');
+        desc.classList.add('desc');
+        desc.innerHTML = artwork.description;
+        
+
+        artwork_dom.append(block);
+
+        artwork_dom.style.opacity = 0;
+        artwork_list.append(artwork_dom);
+        artwork_dom.velocity({
+            opacity: 1
+        }, 1000);
+    }
+}
+
+const getArtworkList = (fn) => {
+    fetch('api/get_artwork.php')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (myJson) {
+            fn(myJson);
+        });
+}
+
+const loadArtwork = () => {
+    loadingArtworkList = true;
 }
