@@ -1,6 +1,7 @@
 const left_panel = document.getElementById('left-panel');
 const nav_toggle = document.getElementById('nav-toggle');
 const home_logo = document.getElementById('home-logo');
+const content_logo = document.getElementById('content-logo');
 const content = document.getElementById('content');
 const artwork_list = document.getElementById('artwork-list');
 
@@ -11,6 +12,12 @@ let checkingLivestream = false;
 window.onload = function () {
     if (home_logo) {
         home_logo.velocity({
+            opacity: 1
+        }, 1000);
+    }
+
+    if (content_logo) {
+        content_logo.velocity({
             opacity: 1
         }, 1000);
     }
@@ -82,15 +89,25 @@ const livestreamCheck = () => {
     checkingLivestream = true;
 }
 
+const displayArtwork = (data) => {
+    console.log(data);
+};
+
 const renderArtworkList = (data) => {
     artwork_list.innerHTML = '';
     for(let i = 0; i < data.length; i++) {
         let artwork = data[i];
         let artwork_dom = document.createElement('li');
 
+        let link = document.createElement('a');
+        link.href = '#';
+        link.onclick = () => {
+            displayArtwork(data);
+        }
+
         let thumbnail = document.createElement('img');
         thumbnail.src = artwork.thumbnail;
-        artwork_dom.append(thumbnail);
+        link.append(thumbnail);
 
         let block = document.createElement('div');
         block.classList.add('block');
@@ -98,19 +115,23 @@ const renderArtworkList = (data) => {
         let title = document.createElement('div');
         title.classList.add('title');
         title.innerHTML = artwork.title;
+        block.append(title);
 
         let desc = document.createElement('div');
         desc.classList.add('desc');
         desc.innerHTML = artwork.description;
-        
+        block.append(desc);
 
-        artwork_dom.append(block);
+        link.append(block);
 
+        artwork_dom.append(link);
         artwork_dom.style.opacity = 0;
         artwork_list.append(artwork_dom);
-        artwork_dom.velocity({
-            opacity: 1
-        }, 1000);
+        thumbnail.onload = () => {
+            artwork_dom.velocity({
+                opacity: 1
+            }, 1000);
+        }
     }
 }
 

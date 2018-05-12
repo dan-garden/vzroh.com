@@ -1,6 +1,7 @@
 <button id="nav-toggle"></button>
 <nav class="panel" id="left-panel">
     <ul>
+        <li><a href="/"><div id="mobile-nav-logo"></div></a></li>
         <li><a href="artwork">ARTWORK</a></li>
         <li><a target="_blank" href="https://twitter.com/vzroh">CONNECT</a></li>
         <li><a href="order">ORDER</a></li>

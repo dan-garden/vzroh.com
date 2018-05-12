@@ -1,7 +1,8 @@
 <?php
     $page = array(
         "name" => "Home",
-        "maintenance" => false
+        "maintenance" => false,
+        "content" => false
     );
 ?>
     <!DOCTYPE html>
@@ -18,7 +19,7 @@
             <!--CONTENT START-->
             <div id="home-logo"></div>
             <div id="content" style="display:none;">
-                <div id="content-logo"></div>
+                <a href="/" id="content-logo"></a>
                 <iframe id="twitch-stream" src="https://player.twitch.tv/?channel=vzroh" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>
             </div>
 

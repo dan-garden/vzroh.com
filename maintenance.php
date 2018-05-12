@@ -1,7 +1,8 @@
 <?php
     $page = array(
         "name" => "Maintenance",
-        "maintenance" => false
+        "maintenance" => false,
+        "content" => false
     );
 ?>
 <!DOCTYPE html>

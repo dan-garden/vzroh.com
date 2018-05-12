@@ -1,7 +1,8 @@
 <?php
     $page = array(
         "name" => "Prices",
-        "maintenance" => true
+        "maintenance" => true,
+        "content" => true
     );
 ?>
 <!DOCTYPE html>
@@ -17,7 +18,7 @@
         <?php include 'right_panel.php'; ?>
         <!--CONTENT START-->
         <div id="content">
-            <div id="content-logo"></div>
+            <a href="/" id="content-logo"></a>
         </div>
         <!--CONTENT END-->
         <?php include 'footer.php'; ?>
