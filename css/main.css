@@ -60,8 +60,8 @@ canvas {
 }
 
 #right-panel {
-    right: 0;
-    padding: 50px 50px 0 0;
+    right: 20px;
+    padding: 50px 30px 0 0;
     text-align: right;
 }
 

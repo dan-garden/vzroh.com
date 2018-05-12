@@ -35,7 +35,7 @@
             'thumbnail'=>'assets/artwork/image6.jpg',
             'title'=>'Graffiti Tribute to a lost brother',
             'description'=>'Digital Streetart Graphics'
-        ],
+        ]
     ];
 
 
