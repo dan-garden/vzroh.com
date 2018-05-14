@@ -19,15 +19,15 @@
         <!--CONTENT START-->
         <div id="content">
             <a href="/" id="content-logo"></a>
-            <form id="order-form">
-                <input type="text" name="name" placeholder="NAME"/>
-                <input type="text" name="email" placeholder="EMAIL ADDRESS"/>
-                <textarea name="message" placeholder="MESSAGE..."></textarea>
-                <button type="submit" id="submit-form">Send</button>
+            <form id="order-form" method="POST" action="javascript: submitOrder();">
+                <input type="text" name="name" autocomplete="name" placeholder="Name"/>
+                <input type="email" name="email" autocomplete="email" placeholder="Email Address"/>
+                <textarea name="message" placeholder="Message"></textarea>
+                <button type="submit" id="submit-form">SEND</button>
             </form>
         </div>
         <!--CONTENT END-->
-        <?php include 'footer.php'; ?>
+        <include file="footer.html"></include>
     </div>
     <?php include 'external_footer.php'; ?>
 </body>

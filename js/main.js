@@ -1,15 +1,22 @@
 const left_panel = document.getElementById('left-panel');
+const menu_links = left_panel.querySelectorAll('a')
 const nav_toggle = document.getElementById('nav-toggle');
 const home_logo = document.getElementById('home-logo');
 const content_logo = document.getElementById('content-logo');
 const content = document.getElementById('content');
-const artwork_list = document.getElementById('artwork-list');
+const order_form = document.getElementById('order-form');
 
 
-
+const checkInterval = 15000;
 let checkingLivestream = false;
 
 window.onload = function () {
+    menu_links.forEach(element => element.addEventListener('click', () => {
+        content.velocity({
+            opacity: 0
+        }, 1000);
+    }));
+
     if (home_logo) {
         home_logo.velocity({
             opacity: 1
@@ -36,18 +43,6 @@ window.onload = function () {
     }
 }
 
-
-const checkInterval = 15000;
-
-const streamOnline = (fn) => {
-    fetch('https://api.twitch.tv/kraken/streams/vzroh_?client_id=65rzgehnta8mlgc2f96ka7us7x5m78')
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (myJson) {
-            fn(myJson);
-        });
-}
 
 const showStream = () => {
     home_logo.velocity({
@@ -76,77 +71,27 @@ const hideStream = () => {
 }
 
 const ifOnline = () => {
-    streamOnline(result => {
-        if (result.stream) {
+    getJSON('https://api.twitch.tv/kraken/streams/vzroh_?client_id=65rzgehnta8mlgc2f96ka7us7x5m78', response => {
+        if (response.stream) {
             showStream();
         } else {
             hideStream();
         }
-    });
+    })
 }
 
 const livestreamCheck = () => {
     checkingLivestream = true;
 }
 
-const displayArtwork = (data) => {
-    console.log(data);
-};
+const submitOrder = () => {
+    const body = formToJSON(order_form);
+    postJSON('api/contact_form.php', body, response => {
+        console.log(response);
+        if(response.status === 'error') {
 
-const renderArtworkList = (data) => {
-    artwork_list.innerHTML = '';
-    for(let i = 0; i < data.length; i++) {
-        let artwork = data[i];
-        let artwork_dom = document.createElement('li');
+        } else if(response.status === 'success') {
 
-        let link = document.createElement('a');
-        link.href = '#';
-        link.onclick = () => {
-            displayArtwork(data);
         }
-
-        let thumbnail = document.createElement('img');
-        thumbnail.src = artwork.thumbnail;
-        link.append(thumbnail);
-
-        let block = document.createElement('div');
-        block.classList.add('block');
-
-        let title = document.createElement('div');
-        title.classList.add('title');
-        title.innerHTML = artwork.title;
-        block.append(title);
-
-        let desc = document.createElement('div');
-        desc.classList.add('desc');
-        desc.innerHTML = artwork.description;
-        block.append(desc);
-
-        link.append(block);
-
-        artwork_dom.append(link);
-        artwork_dom.style.opacity = 0;
-        artwork_list.append(artwork_dom);
-        thumbnail.onload = () => {
-            artwork_dom.velocity({
-                opacity: 1
-            }, 1000);
-        }
-    }
-}
-
-const getArtworkList = (fn) => {
-    fetch('api/get_artwork.php')
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (myJson) {
-            fn(myJson);
-        });
-}
-
-const loadArtwork = () => {
-    getArtworkList((result) => {
-        renderArtworkList(result);
-    });
+    })
 };

@@ -194,30 +194,30 @@ canvas {
     opacity: 0;
 }
 
-#artwork-list {
+#portfolio-list {
     list-style-type: none;
 }
 
-#artwork-list > li {
+#portfolio-list > li {
     display: inline-block;
     margin: 20px;
     width: 100%;
     max-width: 285px;
 }
 
-#artwork-list > li > a {
+#portfolio-list > li > a {
     display: block;
     width: 100%;
     height: 100%;
     text-decoration: none;
 }
 
-#artwork-list > li > a > img {
+#portfolio-list > li > a > img {
     width: 100%;
     display: block;
 }
 
-#artwork-list > li > a > .block {
+#portfolio-list > li > a > .block {
     width: 100%;
     height: auto;
     background-color: rgba(0, 0, 0, 0.7);
@@ -225,7 +225,7 @@ canvas {
     padding: 15px;
 }
 
-#artwork-list > li > a > .block > .title{
+#portfolio-list > li > a > .block > .name{
     font-size: 12px;
     font-weight: bold;
     margin-top: 10px;
@@ -234,14 +234,14 @@ canvas {
     color: white;
 }
 
-#artwork-list > li > a > .block > .desc{
+#portfolio-list > li > a > .block > .desc{
     font-size: 12px;
     letter-spacing: 1px;
     margin-bottom: 10px;
     color: #ABABAB;
 }
 
-#artwork-list > li > a:hover {
+#portfolio-list > li > a:hover {
     outline: solid 1px rgba(255, 255, 255, 0.6);
 }
 
@@ -254,21 +254,25 @@ canvas {
     text-align: center;
 }
 
-#order-form > input, #order-form > textarea {
+#order-form > input, #order-form > textarea, #order-form > button {
     display: block;
     width: 100%;
     padding: 10px 15px;
     margin-top: 10px;
     margin-bottom: 10px;
+    letter-spacing: default;
     font-size: 14px;
-    border: solid 1px #ABABAB;
+    border: solid 1px #9C9C9C;
     background-color: transparent;
     color: white;
+    border-radius: 5px;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    resize: none;
 }
 
-#order-form > input:focus, #order-form > textarea:focus {
-    border: none;
-    outline: solid 2px white;
+#order-form > input:focus, #order-form > textarea:focus, #order-form > button:active, #order-form > button:focus {
+    outline: none;
+    border: solid 1px white;
 }
 
 #order-form > textarea {
@@ -276,8 +280,14 @@ canvas {
 }
 
 #order-form > button {
-    display: block;
-    width: 100%;
+    cursor: pointer;
+    letter-spacing: 3px;
+    color: #FFF;
+}
+
+#order-form > button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: solid 1px transparent;
 }
 
 footer {
@@ -335,7 +345,7 @@ footer {
 
 
 
-    #artwork-list > li {
+    #portfolio-list > li {
         margin: auto;
         margin-top: 20px;
         margin-bottom: 20px;
