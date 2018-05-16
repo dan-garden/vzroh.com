@@ -11,11 +11,19 @@ const checkInterval = 15000;
 let checkingLivestream = false;
 
 window.onload = function () {
-    menu_links.forEach(element => element.addEventListener('click', () => {
-        content.velocity({
-            opacity: 0
-        }, 1000);
-    }));
+    menu_links.forEach(element => {
+
+        const re = new RegExp("^(http|https)://", "i");
+        const href = element.getAttribute('href');
+        const external = re.test(href);
+        if(!external && content) {
+            element.addEventListener('click', () => {
+                content.velocity({
+                    opacity: 0
+                }, 500);
+            })
+        }
+    });
 
     if (home_logo) {
         home_logo.velocity({
@@ -85,8 +93,9 @@ const livestreamCheck = () => {
 }
 
 const submitOrder = () => {
-    const body = formToJSON(order_form);
-    postJSON('api/contact_form.php', body, response => {
+    console.log(order_form);
+    const body = formToBody(order_form, ['name', 'email', 'message']);
+    postJSON('api/contact-form.php', body, response => {
         console.log(response);
         if(response.status === 'error') {
 

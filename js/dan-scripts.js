@@ -1,4 +1,7 @@
 const postJSON = (url, data, fn) => {
+    if(!(data instanceof FormData)) {
+        data = objectToBody(data);
+    }
     fetch(url, {
         body: data,
         method: 'POST'
@@ -7,11 +10,16 @@ const postJSON = (url, data, fn) => {
         return response.json();
     })
     .then(function (response) {
-        fn(response);
+        if(typeof fn === "function") {
+            fn(response);
+        }
     });
 }
 
 const post = (url, data, fn) => {
+    if(!(data instanceof FormData)) {
+        data = objectToBody(data);
+    }
     fetch(url, {
         body: data,
         method: 'POST'
@@ -20,29 +28,80 @@ const post = (url, data, fn) => {
         return response.text();
     })
     .then(function (response) {
-        fn(response);
+        if(typeof fn === "function") {
+            fn(response);
+        }
     });
 }
 
-const getJSON = (url, fn) => {
+const getJSON = (url, data, fn) => {
+    if(typeof data === 'object') {
+        url += '?' + serialize(data);
+    } else if(typeof data === 'function') {
+        fn = data;
+    }
     fetch(url)
         .then(function (response) {
             return response.json();
         })
         .then(function (response) {
-            fn(response);
+            if(typeof fn === "function") {
+                fn(response);
+            }
         });
 }
 
-const get = (url, fn) => {
+const get = (url, data, fn) => {
+    if(typeof data === 'object') {
+        url += '?' + serialize(data);
+    } else if(typeof data === 'function') {
+        fn = data;
+    }
     fetch(url)
         .then(function (response) {
             return response.text();
         })
         .then(function (response) {
-            fn(response);
+            if(typeof fn === "function") {
+                fn(response);
+            }
         });
 }
+
+const serialize = (object) => {
+    const keyvals = [];
+    const keys = Object.keys(object);
+    for(let i = 0; i < keys.length; i++) {
+        let key = keys[i];
+        keyvals.push(key + '=' + encodeURI(object[key]));
+    }
+    return keyvals.join('&');
+}
+
+const formToBody = (form, fields) => {
+    let body;
+    if(!fields) {
+        body = new FormData(form);
+    } else {
+        body = new FormData();
+        for (let i = 0; i < fields.length; i++) {
+            let field = fields[i];
+            body.append(field, form[field].value);
+        }
+    }
+    return body;
+}
+
+const objectToBody = (object) => {
+    const body = new FormData();
+    const keys = Object.keys(object);
+    for(let i = 0; i < keys.length; i++) {
+        let key = keys[i];
+        body.append(key, object[key]);
+    }
+    return body;
+} 
+
 
 const runIncludes = (includes, fn) => {
     for(let i = 0; i < includes.length; i++) {
@@ -75,19 +134,14 @@ const runIncludes = (includes, fn) => {
     }
 };
 
-const formToJSON = (form) => {
-    const fields = ['name', 'email', 'message'];
-    const body = new FormData();
-
-    for (let i = 0; i < fields.length; i++) {
-        let field = fields[i];
-        body.append(field, form[field].value);
+const portfolioClicks = [];
+const displayPortfolioItem = (data) => {
+    if(portfolioClicks.indexOf(data.id) <= -1) {
+        post('api/portfolio-click.php', {id: data.id});
+        portfolioClicks.push(data.id);
+        data.clicks++;
     }
 
-    return body;
-}
-
-const displayPortfolioItem = (data) => {
     console.log(data);
 };
 
@@ -103,9 +157,12 @@ const renderPortfolioList = (element, data) => {
             displayPortfolioItem(portfolio_item);
         }
 
-        let thumbnail = document.createElement('img');
-        thumbnail.src = portfolio_item.thumbnail;
-        link.append(thumbnail);
+        let thumbnail;
+        if(portfolio_item.thumbnail) {
+            thumbnail = document.createElement('img');
+            thumbnail.src = portfolio_item.thumbnail;
+            link.append(thumbnail);
+        }
 
         let block = document.createElement('div');
         block.classList.add('block');
@@ -123,8 +180,9 @@ const renderPortfolioList = (element, data) => {
         link.append(block);
 
         portfolio_item_dom.append(link);
-        portfolio_item_dom.style.opacity = 0;
         element.append(portfolio_item_dom);
+
+        portfolio_item_dom.style.opacity = 0;
         thumbnail.onload = () => {
             portfolio_item_dom.velocity({
                 opacity: 1
@@ -135,7 +193,7 @@ const renderPortfolioList = (element, data) => {
 
 
 const loadPortfolio = (element) => {
-    getJSON('api/portfolio.php', response => {
+    getJSON('api/portfolio-get.php', response => {
         renderPortfolioList(element, response.data);
     })
 };

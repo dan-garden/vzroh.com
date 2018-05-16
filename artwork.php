@@ -19,9 +19,7 @@
         <!--CONTENT START-->
         <div id="content">
             <a href="/" id="content-logo"></a>
-            <ul id="portfolio-list">
-
-            </ul>
+            <ul id="portfolio-list"></ul>
         </div>
         <!--CONTENT END-->
         <?php include 'footer.php'; ?>

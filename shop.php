@@ -21,7 +21,7 @@
             <a href="/" id="content-logo"></a>
         </div>
         <!--CONTENT END-->
-        <include file="footer.html"></include>
+        <?php include 'footer.php';?>
     </div>
     <?php include 'external_footer.php'; ?>
 </body>
