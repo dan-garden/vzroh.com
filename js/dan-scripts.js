@@ -139,6 +139,19 @@ const getFileType = (path) => {
   return fileJoin[fileJoin.length - 1];
 }
 
+const URLParams = (url) => {
+    const params = {};
+    const search = new URL(url || document.location.href);
+    let searchParams = new URLSearchParams(search.search);
+    searchParams.forEach((value, key) => {
+        if(!isNaN(value)) {
+            value = parseInt(value);
+        }
+        params[key] = value;
+    })
+    return params;
+};
+
 const br = () => {
   return document.createElement('br');
 }
@@ -156,9 +169,11 @@ const renderPortfolioItem = (data) => {
 
       if(imageTypes.indexOf(fileType) > -1) {
         //Is image
-        fileDom = document.createElement('img');
-        fileDom.src =  data.file;
-        // fileDom.src = 'http://via.placeholder.com/1000x700';
+        // fileDom = document.createElement('img');
+        // fileDom.src =  data.file;
+
+        fileDom = document.createElement('div');
+        fileDom.style.backgroundImage = 'url('+data.file+')';
       }
 
       fileDom.classList.add('popup-file');
@@ -180,7 +195,7 @@ const renderPortfolioItem = (data) => {
     info_block.append(br());
 
     const info_clicks = document.createElement('span');
-    info_clicks.innerText = data.clicks + ' Project Views';
+    info_clicks.innerHTML = '<i class="fas fa-eye"></i> ' + data.clicks + ' Project Views';
     info_clicks.classList.add('popup-clicks');
     info_block.append(info_clicks);
 
@@ -190,7 +205,10 @@ const renderPortfolioItem = (data) => {
 }
 
 const portfolioClicks = [];
-const displayPortfolioItem = (data) => {
+const displayPortfolioItem = (data, addToHistory=true) => {
+    if(addToHistory) {
+        window.history.pushState(data,"", '?id='+data.id);
+    }
     if(portfolioClicks.indexOf(data.id) <= -1) {
         post('api/portfolio-click.php', {id: data.id});
         portfolioClicks.push(data.id);
@@ -200,15 +218,27 @@ const displayPortfolioItem = (data) => {
     showPopup(renderPortfolioItem(data));
 };
 
+window.onpopstate = function(e){
+    if(e.state){
+        displayPortfolioItem(e.state);
+    } else {
+        removePopups();
+    }
+};
+
 const renderPortfolioList = (element, data) => {
+    const params = URLParams();
+
     element.innerHTML = '';
     for (let i = 0; i < data.length; i++) {
         let portfolio_item = data[i];
         let portfolio_item_dom = document.createElement('li');
+        portfolio_item_dom.id = 'portfolio-item-' + portfolio_item.id;
 
         let link = document.createElement('a');
-        link.href = '#';
-        link.onclick = () => {
+        link.href = '?id=' + portfolio_item.id;
+        link.onclick = (e) => {
+            e.preventDefault();
             displayPortfolioItem(portfolio_item);
         }
 
@@ -243,6 +273,10 @@ const renderPortfolioList = (element, data) => {
                 opacity: 1
             }, 1000);
         }
+
+        if(params.id === portfolio_item.id) {
+            displayPortfolioItem(portfolio_item, false);
+        }
     }
 }
 
@@ -261,6 +295,7 @@ const showPopup = (element) => {
   backdropClick.classList.add('popup-clickable');
   backdropClick.addEventListener('click', () => {
     document.body.removeChild(backdrop);
+    window.history.pushState(false, "", location.pathname.split("/").slice(-1));
   })
 
   backdrop.append(backdropClick);
@@ -268,3 +303,10 @@ const showPopup = (element) => {
   backdrop.append(element);
   document.body.append(backdrop);
 }
+
+const removePopups = () => {
+    const popups = document.querySelectorAll('.popup-backdrop');
+    for(let i = 0; i < popups.length; i++) {
+        document.body.removeChild(popups[i]);
+    }
+};

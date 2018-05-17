@@ -32,18 +32,21 @@ function getPortfolio($path) {
     $portfolio_list = getJSON($path . "meta.json");
     for($i = 0; $i < count($portfolio_list); $i++) {
         $portfolio_list[$i]['id'] = $i;
-        $thumbnail = $path . $i . '/thumbnail.jpg';
-        if(file_exists($thumbnail)) {
-            $portfolio_list[$i]['thumbnail'] = $thumbnail;
-        }
-
-        $thumbnail = $path . $i . '/thumbnail.jpg';
-        if(file_exists($thumbnail)) {
-            $portfolio_list[$i]['thumbnail'] = $thumbnail;
+        $ipath = $path . $i . '/';
+        
+        $thumbnail_search = glob($ipath . 'thumbnail.*');
+        if(count($thumbnail_search) > 0) {
+            $portfolio_list[$i]['thumbnail'] = $thumbnail_search[0];
         } else {
             $portfolio_list[$i]['thumbnail'] = false;
         }
-        $portfolio_list[$i]['file'] = $path . $i . '/thumbnail.jpg';
+
+        $file_search = glob($ipath . 'file.*');
+        if(count($file_search) > 0) {
+            $portfolio_list[$i]['file'] = $file_search[0];
+        } else {
+            $portfolio_list[$i]['file'] = false;
+        }
     }
     return $portfolio_list;
 }

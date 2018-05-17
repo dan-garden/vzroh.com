@@ -93,7 +93,6 @@ const livestreamCheck = () => {
 }
 
 const submitOrder = () => {
-    console.log(order_form);
     const body = formToBody(order_form, ['name', 'email', 'message']);
     postJSON('api/contact-form.php', body, response => {
         console.log(response);
