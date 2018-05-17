@@ -100,7 +100,7 @@ const objectToBody = (object) => {
         body.append(key, object[key]);
     }
     return body;
-} 
+}
 
 
 const runIncludes = (includes, fn) => {
@@ -110,7 +110,7 @@ const runIncludes = (includes, fn) => {
         get(file, result => {
             let div = document.createElement('div');
             div.innerHTML = result.trim();
-            let newElements = div.childNodes; 
+            let newElements = div.childNodes;
             let childIncludes = [];
             for(let j = 0; j < newElements.length; j++) {
                 let newElement = newElements[j];
@@ -134,6 +134,15 @@ const runIncludes = (includes, fn) => {
     }
 };
 
+const getFileType = (path) => {
+  const fileJoin = path.split('.');
+  return fileJoin[fileJoin.length - 1];
+}
+
+const br = () => {
+  return document.createElement('br');
+}
+
 const portfolioClicks = [];
 const displayPortfolioItem = (data) => {
     if(portfolioClicks.indexOf(data.id) <= -1) {
@@ -142,7 +151,49 @@ const displayPortfolioItem = (data) => {
         data.clicks++;
     }
 
-    console.log(data);
+    const popup = document.createElement('div');
+    popup.classList.add('popup-container');
+
+
+    if(data.file) {
+      const fileType = getFileType(data.file);
+      const imageTypes = ['jpg', 'jpeg', 'png', 'gif'];
+
+      let fileDom;
+
+      if(imageTypes.indexOf(fileType) > -1) {
+        //Is image
+        fileDom = document.createElement('img');
+        fileDom.src =  data.file;
+        // fileDom.src = 'http://via.placeholder.com/1000x700';
+      }
+
+      fileDom.classList.add('popup-file');
+      popup.append(fileDom);
+    }
+
+    const info_block = document.createElement('div');
+    info_block.classList.add('popup-info-block');
+
+    const info_name = document.createElement('span');
+    info_name.innerText = data.name;
+    info_name.classList.add('popup-name');
+    info_block.append(info_name);
+
+    const info_desc = document.createElement('span');
+    info_desc.innerText = data.description;
+    info_desc.classList.add('popup-desc');
+    info_block.append(info_desc);
+    info_block.append(br());
+
+    const info_clicks = document.createElement('span');
+    info_clicks.innerText = data.clicks + ' Project Views';
+    info_clicks.classList.add('popup-clicks');
+    info_block.append(info_clicks);
+
+    popup.append(info_block);
+
+    showPopup(popup);
 };
 
 const renderPortfolioList = (element, data) => {
@@ -197,3 +248,19 @@ const loadPortfolio = (element) => {
         renderPortfolioList(element, response.data);
     })
 };
+
+const showPopup = (element) => {
+  const backdrop = document.createElement('div');
+  backdrop.classList.add('popup-backdrop');
+
+  const backdropClick = document.createElement('div');
+  backdropClick.classList.add('popup-clickable');
+  backdropClick.addEventListener('click', () => {
+    document.body.removeChild(backdrop);
+  })
+
+  backdrop.append(backdropClick);
+
+  backdrop.append(element);
+  document.body.append(backdrop);
+}
