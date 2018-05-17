@@ -43,7 +43,7 @@ function getPortfolio($path) {
         } else {
             $portfolio_list[$i]['thumbnail'] = false;
         }
-        $portfolio_list[$i]['file'] = $path . $i . '/file.jpg';
+        $portfolio_list[$i]['file'] = $path . $i . '/thumbnail.jpg';
     }
     return $portfolio_list;
 }

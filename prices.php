@@ -66,6 +66,7 @@
             <a href="/" id="content-logo"></a>
             <?=generatePricingTable($prices);?>
             <span class="white-text">OTHER ARTWORK - <a href="mailto:gfx@vzroh.com">GFX@VZROH.COM</a></span>
+            <a id="order-now" href="order">ORDER NOW!</a>
             <br /><br /><br /><br />
         </div>
         <!--CONTENT END-->

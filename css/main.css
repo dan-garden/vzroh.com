@@ -378,9 +378,6 @@ a {
     margin-bottom: 50px;
 }
 
-#pricing-table > tbody > tr {
-}
-
 #pricing-table > tbody > tr > td {
     padding: 20px 0;
     text-shadow: -11px 16px 15px rgba(0, 0, 0, 1);
@@ -390,6 +387,23 @@ a {
     display: block;
     letter-spacing: 2px;
     font-size: 8px;
+}
+
+#order-now {
+    display: block;
+    text-decoration: none;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    max-width: 400px;
+    font-size: 20px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    color: black;
+    background-color: rgba(255, 255, 255, 1);
 }
 
 footer {

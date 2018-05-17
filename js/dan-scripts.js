@@ -143,14 +143,7 @@ const br = () => {
   return document.createElement('br');
 }
 
-const portfolioClicks = [];
-const displayPortfolioItem = (data) => {
-    if(portfolioClicks.indexOf(data.id) <= -1) {
-        post('api/portfolio-click.php', {id: data.id});
-        portfolioClicks.push(data.id);
-        data.clicks++;
-    }
-
+const renderPortfolioItem = (data) => {
     const popup = document.createElement('div');
     popup.classList.add('popup-container');
 
@@ -193,7 +186,18 @@ const displayPortfolioItem = (data) => {
 
     popup.append(info_block);
 
-    showPopup(popup);
+    return popup;
+}
+
+const portfolioClicks = [];
+const displayPortfolioItem = (data) => {
+    if(portfolioClicks.indexOf(data.id) <= -1) {
+        post('api/portfolio-click.php', {id: data.id});
+        portfolioClicks.push(data.id);
+        data.clicks++;
+    }
+
+    showPopup(renderPortfolioItem(data));
 };
 
 const renderPortfolioList = (element, data) => {
