@@ -95,8 +95,11 @@ const livestreamCheck = () => {
 const submitOrder = () => {
     const body = formToBody(order_form, ['name', 'email', 'message']);
     const status = document.getElementById('status-message');
+    const loading_icon = document.getElementById('loading-icon');
+    loading_icon.style.display = 'inline-block';
     postJSON('api/contact-form.php', body, response => {
         status.innerHTML = '';
+        loading_icon.style.display = 'none';
         if(response.status === 'error') {
             for(let i = 0; i < response.data.length; i++) {
                 let msg = document.createElement('div');

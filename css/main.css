@@ -533,6 +533,10 @@ a {
     color: rgba(0, 0, 0, 0.5);
 }
 
+#loading-icon {
+    display: none;
+}
+
 #pricing-table {
     width: 70%;
     min-width: 300px;
