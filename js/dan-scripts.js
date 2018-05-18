@@ -226,7 +226,7 @@ window.onpopstate = function(e){
     }
 };
 
-const renderPortfolioList = (element, data) => {
+const renderPortfolioList = (element, data, clickable=true) => {
     const params = URLParams();
 
     element.innerHTML = '';
@@ -237,10 +237,14 @@ const renderPortfolioList = (element, data) => {
 
         let link = document.createElement('a');
         link.href = '?id=' + portfolio_item.id;
-        link.onclick = (e) => {
-            e.preventDefault();
-            displayPortfolioItem(portfolio_item);
+
+        if(clickable) {
+            link.onclick = (e) => {
+                e.preventDefault();
+                displayPortfolioItem(portfolio_item);
+            }
         }
+        
 
         let thumbnail;
         if(portfolio_item.thumbnail) {
@@ -274,16 +278,16 @@ const renderPortfolioList = (element, data) => {
             }, 1000);
         }
 
-        if(params.id === portfolio_item.id) {
+        if(clickable && params.id === portfolio_item.id) {
             displayPortfolioItem(portfolio_item, false);
         }
     }
 }
 
 
-const loadPortfolio = (element) => {
-    getJSON('api/portfolio-get.php', response => {
-        renderPortfolioList(element, response.data);
+const loadPortfolio = (element, clickable=true) => {
+    getJSON('../api/portfolio-get', response => {
+        renderPortfolioList(element, response.data, clickable);
     })
 };
 

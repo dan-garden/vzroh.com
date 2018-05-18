@@ -51,7 +51,7 @@ function getPortfolio($path) {
     return $portfolio_list;
 }
 
-function addToPortfolio($name, $description) {
+function addToPortfolio($name, $description, $thumbnailDir, $fileDir) {
     $dir = '../assets/portfolio/';
 
 
@@ -59,12 +59,21 @@ function addToPortfolio($name, $description) {
 
     $portfolio[] = array(
         'name' => $name,
-        'description' => $description
+        'description' => $description,
+        'clicks' => 0
     );
 
     $count = count($portfolio) - 1;
+    $dirPath = $dir . '/' . $count;
+    mkdir($dirPath);
 
-    mkdir($dir . '/' . $count);
+    if($thumbnailDir !== false) {
+        rename($thumbnailDir, $dirPath . '/' . basename($thumbnailDir));
+    }
+
+    if($fileDir !== false) {
+        rename($fileDir, $dirPath . '/' . basename($fileDir));
+    }
 
 
     setJSON($dir . 'meta.json', $portfolio);
