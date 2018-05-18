@@ -49,6 +49,10 @@ body {
     max-width: 400px;
 }
 
+#content > a {
+    color: white;
+}
+
 #content button:hover {
     background-color: rgba(255, 255, 255, 0.4);
 }

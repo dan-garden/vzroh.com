@@ -18,14 +18,18 @@
     <div id="content">
         <div class="title">ORDERS</div>
         <?php
-            foreach($orders as $order) {
-                ?>
-                <div class="order-block">
-                    <b>Name: </b><?=$order['name'];?><br /><br />
-                    <b>Email: </b><?=$order['email'];?><br /><br />
-                    <b>Message: </b><?=nl2br($order['message']);?>
-                </div>
-                <?php
+            if(count($orders) > 0) {
+                foreach($orders as $order) {
+                    ?>
+                    <div class="order-block">
+                        <b>Name: </b><?=$order['name'];?><br /><br />
+                        <b>Email: </b><?=$order['email'];?><br /><br />
+                        <b>Message: </b><?=nl2br($order['message']);?>
+                    </div>
+                    <?php
+                }
+            } else {
+                echo '<h4>There are no orders yet.</h4>';
             }
         ?>
     </div>
