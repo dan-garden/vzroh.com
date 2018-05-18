@@ -94,12 +94,25 @@ const livestreamCheck = () => {
 
 const submitOrder = () => {
     const body = formToBody(order_form, ['name', 'email', 'message']);
+    const status = document.getElementById('status-message');
     postJSON('api/contact-form.php', body, response => {
-        console.log(response);
+        status.innerHTML = '';
         if(response.status === 'error') {
-
+            for(let i = 0; i < response.data.length; i++) {
+                let msg = document.createElement('div');
+                msg.classList.add('error', 'message');
+                msg.innerText = response.data[i];
+                status.appendChild(msg);
+            }
         } else if(response.status === 'success') {
-
+            const hide = document.querySelectorAll('.hide-after');
+            for(let i = 0; i < hide.length; i++) {
+                hide[i].style.display = 'none';
+            }
+            let msg = document.createElement('div');
+                msg.classList.add('success', 'message');
+                msg.innerText = response.data;
+                status.appendChild(msg);
         }
     })
 };

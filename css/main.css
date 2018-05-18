@@ -447,6 +447,36 @@ a {
     text-align: center;
 }
 
+#order-form > #status-message > .message {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 15px 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    border:solid 1px white;
+    letter-spacing: 2px;
+    margin: 10px 0;
+}
+
+#order-form > #status-message > .message.error {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+#order-form > #status-message > .message.error::before {
+    content: "Error: ";
+    font-weight: bold;
+}
+
+#order-form > #status-message > .message.success {
+    background-color: rgba(0, 255, 50, 0.5);
+}
+
+#order-form > #status-message > .message.success::before {
+    content: "Success: ";
+    font-weight: bold;
+}
+
 #order-form > input, #order-form > textarea {
     display: block;
     width: 100%;
