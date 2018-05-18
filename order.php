@@ -1,6 +1,7 @@
 <?php
     $page = array(
         "name" => "Order",
+        "description" => "",
         "maintenance" => false,
         "content" => true
     );

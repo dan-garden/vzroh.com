@@ -199,7 +199,34 @@ const renderPortfolioItem = (data) => {
     info_clicks.classList.add('popup-clicks');
     info_block.append(info_clicks);
 
+    const share_block = document.createElement('div');
+    share_block.classList.add('popup-share-block');
+
+    const share_url = 'artwork?id=' + data.id;
+    const twitter_url = shareLink('twitter', share_url);
+    const facebook_url = shareLink('facebook', share_url);
+    const gplus_url = shareLink('gplus', share_url);
+
+    const twitter_link = document.createElement('a');
+    twitter_link.classList.add('twitter-share', 'share-link');
+    twitter_link.target ="_blank";
+    twitter_link.href = twitter_url;
+    share_block.append(twitter_link);
+
+    const facebook_link = document.createElement('a');
+    facebook_link.classList.add('facebook-share', 'share-link');
+    facebook_link.target ="_blank";
+    facebook_link.href = facebook_url;
+    share_block.append(facebook_link);
+
+    const gplus_link = document.createElement('a');
+    gplus_link.classList.add('gplus-share', 'share-link');
+    gplus_link.target ="_blank";
+    gplus_link.href = gplus_url;
+    share_block.append(gplus_link);
+
     popup.append(info_block);
+    popup.append(share_block);
 
     return popup;
 }
@@ -225,6 +252,21 @@ window.onpopstate = function(e){
         removePopups();
     }
 };
+
+const shareLink = (type, path=document.location.pathname) => {
+    const url = encodeURI(document.location.origin + '/' + path);
+    let shareurl;
+    if(type === 'fb' || type === 'facebook') {
+        shareurl = 'https://www.facebook.com/sharer/sharer.php?u=' + url;
+    }
+    if(type === 'twitter') {
+        shareurl = 'https://twitter.com/home?status=Check%20out%20this%20awesome%20design%20by%20Vzroh!%3A%20' + url;
+    }
+    if(type === 'google' || type === 'gplus') {
+        shareurl = 'https://plus.google.com/share?url=' + url;
+    }
+    return shareurl;
+}
 
 const renderPortfolioList = (element, data, clickable=true) => {
     const params = URLParams();
@@ -313,4 +355,4 @@ const removePopups = () => {
     for(let i = 0; i < popups.length; i++) {
         document.body.removeChild(popups[i]);
     }
-};
+}

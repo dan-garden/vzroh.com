@@ -243,9 +243,54 @@ a {
     pointer-events: none;
 }
 
+.popup-container > .popup-share-block {
+    margin: auto;
+    display: inline-block;
+    text-align: left;
+    width: 50%;
+    color: #ccc;
+    font-size: 14px;
+    letter-spacing: 1px;
+    padding: 15px 10px 30px 10px;
+    line-height: 20px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    pointer-events: auto;
+}
+
+.popup-container > .popup-share-block > .share-link {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    margin: 0 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: solid 2px rgba(0, 0, 0, 0.5);
+    border-radius: 100%;
+}
+
+.popup-container > .popup-share-block > .share-link:hover {
+    border: solid 2px white;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.popup-container > .popup-share-block > .share-link.twitter-share {
+    background-image: url(../assets/twitter-icon.png);
+}
+
+.popup-container > .popup-share-block > .share-link.facebook-share {
+    background-image: url(../assets/facebook-icon.png);
+}
+
+.popup-container > .popup-share-block > .share-link.gplus-share {
+    background-image: url(../assets/gplus-icon.png);
+}
+
+
 .popup-container > .popup-info-block {
   margin: auto;
-  display: block;
+  display: inline-block;
   text-align: center;
   width: 100%;
   color: #ccc;

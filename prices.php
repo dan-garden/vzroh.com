@@ -2,6 +2,7 @@
     include_once 'config.php';
     $page = array(
         "name" => "Prices",
+        "description" => "",
         "maintenance" => false,
         "content" => true
     );

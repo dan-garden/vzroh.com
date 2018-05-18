@@ -1,9 +1,22 @@
 <?php
     $page = array(
         "name" => "Artwork",
+        "description" => "",
         "maintenance" => false,
         "content" => true
     );
+
+    include_once('api/dan-lib.php');
+
+    $portfolio = getPortfolio('assets/portfolio/');
+    $id = $_GET['id'];
+    if(isset($id)) {
+        $current_portfolio_item = $portfolio[intval($id)];
+        $page["name"] = $current_portfolio_item["name"];
+        $page["description"] = $current_portfolio_item["description"];
+        $item_image_path = '/' . $current_portfolio_item["file"];
+        $page["image"] = 'http://' . $_SERVER['HTTP_HOST'] . $item_image_path;
+    }
 ?>
 <!DOCTYPE html>
 <html>

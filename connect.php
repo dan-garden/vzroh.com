@@ -1,6 +1,7 @@
 <?php
     $page = array(
         "name" => "Connect",
+        "description" => "",
         "maintenance" => false,
         "content" => true
     );
@@ -38,7 +39,7 @@
                         I'm 21 years old.. I look like a child though.<br /><br />
                         I've been working with Photoshop for 7 years now.<br /><br />
                         VZROH is really just a random bunch of letters strung together to create my online alias. <br /><br />
-                        People ask me often how I got the skillset in design I have todday. Honestly, nothing special. Just practise.
+                        People ask me often how I got the skillset in design I have today. Honestly, nothing special. Just practise.
                     </p>
                 </div>
             </div>
