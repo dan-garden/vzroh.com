@@ -9,8 +9,8 @@
     include_once('api/dan-lib.php');
 
     $portfolio = getPortfolio('assets/portfolio/');
-    $id = $_GET['id'];
-    if(isset($id)) {
+    if(isset($_GET['id'])) {
+        $id = $_GET['id'];
         $current_portfolio_item = $portfolio[intval($id)];
         $page["name"] = $current_portfolio_item["name"];
         $page["description"] = $current_portfolio_item["description"];
